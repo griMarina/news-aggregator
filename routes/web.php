@@ -16,23 +16,19 @@ use App\Http\Controllers\NewsController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('index');
+})->name('home');
 
-Route::group(['prefix' => 'news'], static function () {
-    Route::get('/', [NewsController::class, 'index'])
-        ->name('news');
-
-    Route::get('/{id}/show', [NewsController::class, 'show'])
-        ->where('id', '\d+')
-        ->name('news.show');
-});
-
-Route::group(['prefix' => ''], static function () {
-    Route::get('/categories', [CategoryController::class, 'index'])
-        ->name('categories.index');
-
-    Route::get('category/{id}', [CategoryController::class, 'show'])
-        ->where('id', '\d+')
-        ->name('category.show');
-});
+Route::name('news.')
+    ->prefix('news')
+    ->group(function () {
+        Route::get('/', [NewsController::class, 'index'])
+            ->name('index');
+        Route::get('/show/{id}', [NewsController::class, 'show'])
+            ->where('id', '\d+')
+            ->name('show');
+        Route::get('/categories', [CategoryController::class, 'index'])
+            ->name('categories');
+        Route::get('/category/{slug}', [CategoryController::class, 'show'])
+            ->name('category');
+    });
