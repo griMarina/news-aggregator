@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,18 +19,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/welcome', function (): string {
-    return 'Hi there! Welcome to my first laravel project';
+Route::group(['prefix' => 'news'], static function () {
+    Route::get('/', [NewsController::class, 'index'])
+        ->name('news');
+
+    Route::get('/{id}/show', [NewsController::class, 'show'])
+        ->where('id', '\d+')
+        ->name('news.show');
 });
 
-Route::get('/info', static function (): string {
-    return 'Here will be soon a news aggregator!';
-});
+Route::group(['prefix' => ''], static function () {
+    Route::get('/categories', [CategoryController::class, 'index'])
+        ->name('categories.index');
 
-Route::get('/news', static function (): string {
-    return 'Page with all the news';
-});
-
-Route::get('/news/{id}', static function (int $id): string {
-    return "Welcome to page of the news with id {$id}";
+    Route::get('category/{id}', [CategoryController::class, 'show'])
+        ->where('id', '\d+')
+        ->name('category.show');
 });
