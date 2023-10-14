@@ -32,3 +32,7 @@ Route::name('news.')
         Route::get('/category/{slug}', [CategoryController::class, 'show'])
             ->name('category');
     });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
