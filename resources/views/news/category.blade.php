@@ -9,13 +9,17 @@
 @endsection
 @section('content')
     @if ($category)
-    <div>
-            <h1>News from category {{ $category }} </h1>
+    <div class="container">
+            <h2>News from category {{ $category }} </h2>
             @forelse ($news as $n)
-            <div style='border: 1px solid green'>
-                <h2>{{ $n['title'] }}</h2>
-                <h2>{{ $n['text'] }}</h2>
-                <a href="{{ route('news.show', ['id' => $n['id']]) }}">More</a>
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ $n['title'] }}</h3>
+                        <p class="card-text">{{ $n['text'] }}</p>
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('news.show', ['id' => $n['id']]) }}">More...</a>
+                    </div>
+                </div>
             </div>
             @empty
                 <p>There are no news in this category</p>

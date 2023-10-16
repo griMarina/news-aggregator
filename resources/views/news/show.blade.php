@@ -10,7 +10,7 @@
 
 @section('content')
     @if ($news)
-    <div>
+    <div class="container">
         <h2>{{ $news['title'] ?? '' }}</h2>
         @if (!$news['isPrivate'])
             <p>{{ $news['text'] ?? '' }}</p>
